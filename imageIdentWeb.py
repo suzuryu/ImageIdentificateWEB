@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template, send_from_directory
+import glob
 import os
 
 
 from imageIdenti import resize_img, identifies_img
 
 app = Flask(__name__, template_folder='templates')
-app.config.update({'DEBUG': True})
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = ['png', 'PNG', 'jpg', 'JPEG', 'gif']
@@ -16,6 +16,7 @@ def file_is_allowed(filename):
 
 @app.route ('/')
 def index():
+    [os.remove(file) for file in glob.glob(app.config['UPLOAD_FOLDER'] + '/*')]
     return render_template('index.html')
 
 
@@ -27,13 +28,18 @@ def send():
             filename = img_file.filename
             print(img_file)
             if img_file and file_is_allowed(filename):
-                img_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                img_file.save(file_path)
                 img_url = '/uploads/' + filename
                 result = identifies_img('./uploads/' + filename)
 
                 return render_template('index.html', img_url=img_url, result=result)
             else:
-                return ''' <p> img upload failed </p> '''
+                return '''
+                        <h1> img upload failed </h1>
+                        <p>allowed jpg, png and gif </p>
+                        <a href="/">go back</a>
+                        '''
 
     except Exception:
         return render_template("index.html")
