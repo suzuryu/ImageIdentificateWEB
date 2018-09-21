@@ -1,0 +1,5 @@
+Flask==1.0.2
+Flask-Cors==3.0.3
+glob2==0.6
+opencv-python==3.4.0.12
+numpy==1.14.0
