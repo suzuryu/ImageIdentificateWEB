@@ -8,7 +8,7 @@ from imageIdenti import resize_img, identifies_img
 app = Flask(__name__, template_folder='templates')
 
 UPLOAD_FOLDER = './uploads'
-ALLOWED_EXTENSIONS = ['png', 'PNG', 'jpg', 'JPEG', 'gif']
+ALLOWED_EXTENSIONS = ['png', 'PNG', 'jpg', 'JPEG', 'gif', 'JPG']
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def file_is_allowed(filename):
