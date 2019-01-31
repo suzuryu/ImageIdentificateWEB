@@ -19,7 +19,6 @@ def index():
     [os.remove(file) for file in glob.glob(app.config['UPLOAD_FOLDER'] + '/*')]
     return render_template('index.html')
 
-
 @app.route('/send', methods=['POST'])
 def send():
     try:
